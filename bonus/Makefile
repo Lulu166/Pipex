@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lucas <lucas@student.42.fr>                +#+  +:+       +#+         #
+#    By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:23:06 by luhumber          #+#    #+#              #
-#    Updated: 2023/03/13 22:50:17 by lucas            ###   ########.fr        #
+#    Updated: 2023/03/14 09:30:33 by luhumber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ LIST_OBJS = $(SRCS:.c=.o)
 
 DIR_OBJS = .objs/
 
-SRCS = 	
+SRCS = 	main.c \
+		
 
 OBJS = $(addprefix $(DIR_OBJS), $(LIST_OBJS))
 HEADERS = pipex.h

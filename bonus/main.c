@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/13 23:00:29 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/14 09:47:10 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_init_struct(t_pipe *pipex)
+{
+	
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,5 +31,5 @@ int	main(int argc, char **argv, char **envp)
 		write(STDERR_FILENO, "pipex : Error envp\n", 20);
 		exit(1);
 	}
-	ft_init_struct();
+	ft_init_struct(&pipex);
 }
