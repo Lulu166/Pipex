@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:22:38 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/14 13:44:34 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:36:25 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	ft_child(t_pipe *pipex)
 		if (dup2(pipex->file_out, STDOUT_FILENO) == -1)
 			ft_error(pipex);
 		close(pipex->fd[0]);
-		//close(pipex->fd[1]);
 		if (pipex->last_cmd2 != NULL)
 			execve(pipex->good_path_2, pipex->last_cmd2, pipex->env_path);
 	}
@@ -47,7 +46,6 @@ void	ft_parent(t_pipe *pipex)
 			ft_error(pipex);
 		if (dup2(pipex->file_in, STDIN_FILENO) == -1)
 			ft_error(pipex);
-		//close(pipex->fd[0]);
 		close(pipex->fd[1]);
 		if (pipex->last_cmd1 != NULL)
 			execve(pipex->last_cmd1[0], pipex->last_cmd1, pipex->env_path);
@@ -64,8 +62,6 @@ void	ft_pipex_algo(t_pipe *pipex)
 	if (pipex->file_error == 1)
 		ft_printf("%s\n", strerror(errno));
 	ft_child(pipex);
-	//close(pipex->fd[0]);
-	//close(pipex->fd[1]);
 	if (pipex->error1 == 0 && pipex->error2 == 0)
 	{
 		if (pipex->pid1)

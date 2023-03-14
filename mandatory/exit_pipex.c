@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 15:50:37 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/14 13:06:18 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/14 14:43:24 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	ft_create_struct(t_pipe *pipex, char **argv, char **envp)
 	pipex->file_in = open(pipex->file1, O_RDONLY);
 	if (pipex->file_in == -1)
 		pipex->file_error = 1;
+	pipex->pid1 = -1;
+	pipex->pid2 = -1;
 }
 
 int	ft_exit(t_pipe *pipex)
