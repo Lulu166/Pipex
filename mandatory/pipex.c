@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:22:38 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/14 23:15:32 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/15 11:03:03 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,8 @@ int	main(int argc, char **argv, char **envp)
 	ft_pipex_algo(&pipex);
 	if (pipex.file_out)
 		close(pipex.file_out);
-	if (pipex.file_in)
+	if (pipex.file_in && pipex.file_in != -1)
 		close(pipex.file_in);
-	if (pipex.fd[0])
-		close(pipex.fd[0]);
-	if (pipex.fd[1])
-		close(pipex.fd[1]);
 	ft_exit(&pipex);
 	return (0);
 }
