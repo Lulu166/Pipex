@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+         #
+#    By: lucas <lucas@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:23:06 by luhumber          #+#    #+#              #
-#    Updated: 2023/03/14 09:30:33 by luhumber         ###   ########.fr        #
+#    Updated: 2023/03/15 18:17:30 by lucas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ LIST_OBJS = $(SRCS:.c=.o)
 DIR_OBJS = .objs/
 
 SRCS = 	main.c \
+		init.c \
+		exit.c \
 		
 
 OBJS = $(addprefix $(DIR_OBJS), $(LIST_OBJS))

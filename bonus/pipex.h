@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:24:16 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/14 09:31:46 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/18 00:06:45 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,19 @@
 # include <errno.h>
 
 typedef struct pipe {
-	int		fd[2];
-	int		pid1;
-	int		pid2;
-	int		nb_cmd;
+	int		*pid;
+	int		i;
+	int		input_fd;
+	int		file_out;
+	char	***cmd;
 	char	**env_path;
 	char	*path;
-	char	*file1;
-	char	*file2;
-	int		file_in;
-	int		file_out;
-	char	**cmd;
-	char	**last_cmd;
 	char	**split_path;
-	char	**good_path;
+	int		here_doc;
+	char	*limiter;
 }	t_pipe;
 
-
+void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp);
+int		ft_error(t_pipe *pipex);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:22:38 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/15 11:03:03 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/15 17:27:39 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,12 @@ void	ft_parent(t_pipe *pipex)
 void	ft_pipex_algo(t_pipe *pipex)
 {
 	ft_get_path(pipex);
+	pipex->split_path = ft_split(pipex->path, ':');
+	if (!pipex->split_path)
+		ft_error(pipex);
 	if (pipe(pipex->fd) == -1)
 		ft_error(pipex);
-	ft_good_path(pipex, 0);
+	ft_good_path(pipex);
 	ft_parent(pipex);
 	if (pipex->file_error == 1)
 		ft_printf("%s\n", strerror(errno));

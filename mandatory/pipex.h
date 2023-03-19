@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:24:16 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/02 14:05:49 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/15 16:58:18 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct pipe {
 void	ft_create_struct(t_pipe *pipex, char **argv, char **envp);
 char	*ft_find_path(t_pipe *pipex, char **cmd);
 void	ft_get_path(t_pipe *pipex);
-void	ft_good_path(t_pipe *pipex, int i);
+void	ft_good_path(t_pipe *pipex);
 int		ft_error(t_pipe *pipex);
 int		ft_exit(t_pipe *pipex);
 int		ft_parsing_args(char *cmd);

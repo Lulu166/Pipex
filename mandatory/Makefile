@@ -6,7 +6,7 @@
 #    By: lucas <lucas@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/11 14:23:06 by luhumber          #+#    #+#              #
-#    Updated: 2023/03/14 16:42:45 by lucas            ###   ########.fr        #
+#    Updated: 2023/03/15 13:59:41 by lucas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ DIR_OBJS = .objs/
 SRCS = 	pipex.c \
 		reading.c \
 		exit_pipex.c\
+		init_struct.c \
 
 OBJS = $(addprefix $(DIR_OBJS), $(LIST_OBJS))
 HEADERS = pipex.h

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 17:04:51 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/02 14:10:14 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/15 16:59:42 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,11 @@ char	*ft_find_path(t_pipe *pipex, char **cmd)
 	return (ft_loop_access(pipex, tmp, cmd));
 }
 
-void	ft_good_path(t_pipe *pipex, int i)
+void	ft_good_path(t_pipe *pipex)
 {
-	pipex->split_path = ft_split(pipex->path, ':');
-	if (!pipex->split_path)
-		ft_error(pipex);
+	int	i;
+
+	i = 0;
 	while (pipex->split_path[i++])
 		pipex->tab_size = i;
 	pipex->good_path_1 = ft_find_path(pipex, &pipex->cmd1);
