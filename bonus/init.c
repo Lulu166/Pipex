@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:48:27 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/20 15:35:48 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:28:59 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,30 +45,42 @@ void	ft_allocate_cmd(t_pipe *pipex, int argc, char **argv)
 	if (pipex->here_doc == 0)
 	{
 		pipex->cmd = malloc(sizeof(char **) * (argc - 1));
+		if (!pipex->cmd)
+			ft_end(pipex, 1);
 		i = 2;
 		while (i < argc - 1)
 		{
 			pipex->cmd[j] = ft_split(argv[i], ' ');
+			if (!pipex->cmd[j])
+				ft_end(pipex, 1);
 			pipex->cmd[j][0] = ft_get_path(pipex->cmd[j][0], pipex);
 			i++;
 			j++;
 		}
 		pipex->cmd[j] = NULL;
 		pipex->pid = malloc(sizeof(int) * (argc - 2));
+		if (!pipex->pid)
+			ft_end(pipex, 1);
 	}
 	else
 	{
 		pipex->cmd = malloc(sizeof(char **) * (argc - 2));
+		if (!pipex->cmd)
+			ft_end(pipex, 1);
 		i = 3;
 		while (i < argc - 1)
 		{
 			pipex->cmd[j] = ft_split(argv[i], ' ');
+			if (!pipex->cmd)
+				ft_end(pipex, 1);
 			pipex->cmd[j][0] = ft_get_path(pipex->cmd[j][0], pipex);
 			i++;
 			j++;
 		}
 		pipex->cmd[j] = NULL;
 		pipex->pid = malloc(sizeof(int) * (argc - 3));
+		if (!pipex->pid)
+			ft_end(pipex, 1);
 	}
 }
 
@@ -108,6 +120,7 @@ void	check_here_doc(t_pipe *pipex, int argc, char **argv)
 		{
 			ft_print_error(argv[i -1]);
 			pipex->input_fd = 1;
+			pipex->i++;
 		}
 		pipex->file_out = open
 			(argv[argc -1], O_RDWR | O_TRUNC | O_CREAT, 0644);
@@ -118,6 +131,8 @@ void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp)
 {
 	pipex->env_path = envp;
 	pipex->here_doc = 0;
+	pipex->i = -1;
+	pipex->pid = NULL;
 	check_here_doc(pipex, argc, argv);
 	ft_get_env(pipex);
 	ft_allocate_cmd(pipex, argc, argv);

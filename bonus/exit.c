@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 18:16:39 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/20 13:36:43 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/20 16:29:29 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,22 @@ void	ft_end(t_pipe *pipex, int code)
 	int	i;
 
 	i = 0;
-	ft_free_cmd(pipex->cmd);
+	if (pipex->cmd)
+		ft_free_cmd(pipex->cmd);
 	if (pipex->input_fd)
 		close(pipex->input_fd);
 	if (pipex->file_out)
 		close(pipex->file_out);
-	free(pipex->pid);
+	if (pipex->pid)
+		free(pipex->pid);
 	while (pipex->split_path[i])
 		free(pipex->split_path[i++]);
 	free(pipex->split_path);
 	if (code == 0)
 		exit(0);
 	else
+	{
+		write(2, "pipex : unexepted error\n", 25);
 		exit(1);
+	}
 }
