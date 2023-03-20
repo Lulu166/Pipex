@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/19 23:33:47 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/20 14:33:47 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 int	ft_execute(t_pipe *pipex, int fd[2], int i)
 {
 	if (dup2(pipex->input_fd, STDIN_FILENO) == -1)
-		ft_error(pipex);
+		return (ft_print_error("dup2"));
 	if (pipex->cmd[i + 1] != NULL)
 		if (dup2(fd[1], 1) == -1)
-			ft_error(pipex);
+			return (ft_print_error("dup2"));
 	close(fd[0]);
 	if (execve(pipex->cmd[i][0], pipex->cmd[i], pipex->env_path) == -1)
 		return (0);
@@ -33,14 +33,14 @@ int	ft_pipex_algo(t_pipe *pipex)
 
 	i = 0;
 	if (dup2(pipex->file_out, STDOUT_FILENO) == -1)
-		ft_error(pipex);
+		return (ft_print_error("dup2"));
 	while (pipex->cmd[i] != NULL)
 	{
 		if (pipe(fd) == -1)
-			ft_error(pipex);
+			return (ft_print_error("pipe"));
 		pid = fork();
 		if (pid == -1)
-			ft_error(pipex);
+			ft_print_error("pipe");
 		else if (pid == 0)
 			if (!ft_execute(pipex, fd, i))
 				return (1);
@@ -96,8 +96,6 @@ int	main(int argc, char **argv, char **envp)
 	if (ft_here_doc(&pipex))
 		return (0);
 	ft_pipex_algo(&pipex);
-	// TODO cmd qui ne message pas d'erreur
-	// TODO remplacer ancien outfile ??
-	//ft_end(&pipex, 0);
+	ft_end(&pipex, 0);
 	return (0);
 }

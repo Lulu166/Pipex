@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 18:16:39 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/19 23:30:23 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/20 13:36:43 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_print_error(char	*str)
+{
+	char	*join;
+
+	join = ft_strjoin("pipex : ", str);
+	perror(join);
+	free(join);
+	return (1);
+}
 
 void	ft_free_cmd(char ***cmd)
 {
@@ -18,7 +28,7 @@ void	ft_free_cmd(char ***cmd)
 	int	k;
 
 	i = -1;
-	while (cmd[i++])
+	while (cmd[++i])
 	{
 		k = -1;
 		while (cmd[i][++k])
@@ -38,11 +48,18 @@ int	ft_error(t_pipe *pipex)
 
 void	ft_end(t_pipe *pipex, int code)
 {
+	int	i;
+
+	i = 0;
 	ft_free_cmd(pipex->cmd);
-	close(pipex->input_fd);
-	close(pipex->file_out);
+	if (pipex->input_fd)
+		close(pipex->input_fd);
+	if (pipex->file_out)
+		close(pipex->file_out);
 	free(pipex->pid);
-	free(pipex);
+	while (pipex->split_path[i])
+		free(pipex->split_path[i++]);
+	free(pipex->split_path);
 	if (code == 0)
 		exit(0);
 	else
