@@ -6,7 +6,7 @@
 /*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/19 20:36:05 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/19 23:33:47 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int	main(int argc, char **argv, char **envp)
 	if (ft_here_doc(&pipex))
 		return (0);
 	ft_pipex_algo(&pipex);
-	//TODO ft_error & free & close
+	// TODO cmd qui ne message pas d'erreur
 	// TODO remplacer ancien outfile ??
+	//ft_end(&pipex, 0);
 	return (0);
 }

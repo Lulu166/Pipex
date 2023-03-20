@@ -6,7 +6,7 @@
 /*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:24:16 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/18 00:06:45 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/19 23:27:34 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ typedef struct pipe {
 
 void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp);
 int		ft_error(t_pipe *pipex);
+void	ft_end(t_pipe *pipex, int code);
 
 #endif
