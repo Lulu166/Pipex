@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/20 14:33:47 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:30:52 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	ft_execute(t_pipe *pipex, int fd[2], int i)
 {
 	if (dup2(pipex->input_fd, STDIN_FILENO) == -1)
 		return (ft_print_error("dup2"));
-	if (pipex->cmd[i + 1] != NULL)
-		if (dup2(fd[1], 1) == -1)
-			return (ft_print_error("dup2"));
 	close(fd[0]);
+	if (pipex->cmd[i + 1] != NULL && dup2(fd[1], 1) == -1)
+		return (ft_print_error("dup2"));
 	if (execve(pipex->cmd[i][0], pipex->cmd[i], pipex->env_path) == -1)
 		return (0);
 	return (1);
@@ -44,7 +43,8 @@ int	ft_pipex_algo(t_pipe *pipex)
 		else if (pid == 0)
 			if (!ft_execute(pipex, fd, i))
 				return (1);
-		waitpid(pid, NULL, 1);
+		pipex->tab_pid[i] = pid;
+		pipex->tab_fd[i] = pipex->input_fd;
 		pipex->input_fd = fd[0];
 		close(fd[1]);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 18:16:39 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/20 16:29:29 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:16:30 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ void	ft_end(t_pipe *pipex, int code)
 	while (pipex->split_path[i])
 		free(pipex->split_path[i++]);
 	free(pipex->split_path);
+	i = 0;
+	while (pipex->tab_fd[i])
+		i++;
+	while (i--)
+		close(pipex->tab_fd[i]);
+	i = 0;
+	while (pipex->tab_pid[i])
+		i++;
+	while (i--)
+		waitpid(pipex->tab_pid[i], NULL, 0);
+	free(pipex->tab_fd);
+	free(pipex->tab_pid);
 	if (code == 0)
 		exit(0);
 	else

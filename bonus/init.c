@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:48:27 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/20 16:28:59 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/21 17:09:21 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ void	check_here_doc(t_pipe *pipex, int argc, char **argv)
 		{
 			ft_print_error(argv[i -1]);
 			pipex->input_fd = 1;
-			pipex->i++;
 		}
 		pipex->file_out = open
 			(argv[argc -1], O_RDWR | O_TRUNC | O_CREAT, 0644);
@@ -131,7 +130,8 @@ void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp)
 {
 	pipex->env_path = envp;
 	pipex->here_doc = 0;
-	pipex->i = -1;
+	pipex->tab_fd = ft_calloc(sizeof(int), (argc - 2));
+	pipex->tab_pid = ft_calloc(sizeof(pid_t), (argc - 2));
 	pipex->pid = NULL;
 	check_here_doc(pipex, argc, argv);
 	ft_get_env(pipex);

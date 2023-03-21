@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:24:16 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/20 13:40:07 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:24:56 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 
 typedef struct pipe {
 	int		*pid;
-	int		i;
 	int		input_fd;
 	int		file_out;
+	int		*tab_pid;
+	int		*tab_fd;
 	char	***cmd;
 	char	**env_path;
 	char	*path;
