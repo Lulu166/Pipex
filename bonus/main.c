@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/21 15:30:52 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/21 18:09:59 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	ft_execute(t_pipe *pipex, int fd[2], int i)
 {
+	close(pipex->file_out);
 	if (dup2(pipex->input_fd, STDIN_FILENO) == -1)
 		return (ft_print_error("dup2"));
 	close(fd[0]);
 	if (pipex->cmd[i + 1] != NULL && dup2(fd[1], 1) == -1)
 		return (ft_print_error("dup2"));
+	close(fd[1]);
 	if (execve(pipex->cmd[i][0], pipex->cmd[i], pipex->env_path) == -1)
 		return (0);
 	return (1);

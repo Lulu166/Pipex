@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:24:16 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/21 15:24:56 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/21 17:43:41 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 
 typedef struct pipe {
+	int		cpy_out;
 	int		*pid;
 	int		input_fd;
 	int		file_out;
