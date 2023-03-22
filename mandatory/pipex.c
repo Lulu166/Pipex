@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:22:38 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/22 13:02:44 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:00:12 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_pipex_algo(t_pipe *pipex)
 	ft_child(pipex);
 	close(pipex->fd[0]);
 	close(pipex->fd[1]);
-	if (pipex->error1 == 0 && pipex->error2 == 0)
+	if (pipex->error1 == 0 || pipex->error2 == 0)
 	{
 		if (pipex->pid1)
 			waitpid(pipex->pid1, NULL, 0);
