@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 18:16:39 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/21 18:09:36 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:25:26 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_end(t_pipe *pipex, int code)
 		ft_free_cmd(pipex->cmd);
 	if (pipex->input_fd)
 		close(pipex->input_fd);
-	ft_printf("la=%d\n", pipex->file_out);
 	if (pipex->file_out)
 		close(pipex->file_out);
 	if (pipex->pid)

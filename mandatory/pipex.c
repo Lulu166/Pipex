@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:22:38 by luhumber          #+#    #+#             */
-/*   Updated: 2023/03/15 17:27:39 by lucas            ###   ########.fr       */
+/*   Updated: 2023/03/22 11:26:53 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_parent(t_pipe *pipex)
 		ft_error(pipex);
 	if (pipex->pid1 == 0)
 	{
+		ft_printf("OK\n");
 		if (dup2(pipex->fd[1], STDOUT_FILENO) == -1)
 			ft_error(pipex);
 		if (dup2(pipex->file_in, STDIN_FILENO) == -1)
