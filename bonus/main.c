@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/22 11:15:57 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/24 22:21:54 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	ft_execute(t_pipe *pipex, int fd[2], int i)
 	if (pipex->cmd[i + 1] != NULL && dup2(fd[1], STDOUT_FILENO) == -1)
 		return (ft_print_error("dup2"));
 	close(fd[1]);
-	if (execve(pipex->cmd[i][0], pipex->cmd[i], pipex->env_path) == -1)
+	if (pipex->input_fd != 1
+		&& execve(pipex->cmd[i][0], pipex->cmd[i], pipex->env_path) == -1)
 		return (0);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 18:16:39 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/22 10:25:26 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:07:14 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ int	ft_error(t_pipe *pipex)
 	exit(1);
 }
 
+void	ft_close_and_wait(t_pipe *pipex)
+{
+	int	i;
+
+	i = 0;
+	while (pipex->tab_fd[i])
+		i++;
+	while (i--)
+		close(pipex->tab_fd[i]);
+	i = 0;
+	while (pipex->tab_pid[i])
+		i++;
+	while (i--)
+		waitpid(pipex->tab_pid[i], NULL, 0);
+	free(pipex->tab_fd);
+	free(pipex->tab_pid);
+}
+
 void	ft_end(t_pipe *pipex, int code)
 {
 	int	i;
@@ -62,23 +80,9 @@ void	ft_end(t_pipe *pipex, int code)
 	while (pipex->split_path[i])
 		free(pipex->split_path[i++]);
 	free(pipex->split_path);
-	i = 0;
-	while (pipex->tab_fd[i])
-		i++;
-	while (i--)
-		close(pipex->tab_fd[i]);
-	i = 0;
-	while (pipex->tab_pid[i])
-		i++;
-	while (i--)
-		waitpid(pipex->tab_pid[i], NULL, 0);
-	free(pipex->tab_fd);
-	free(pipex->tab_pid);
+	ft_close_and_wait(pipex);
 	if (code == 0)
 		exit(0);
-	else
-	{
-		write(2, "pipex : unexepted error\n", 25);
-		exit(1);
-	}
+	write(2, "pipex : unexepted error\n", 25);
+	exit(1);
 }

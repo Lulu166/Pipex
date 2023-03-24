@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:48:27 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/21 17:09:21 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/03/22 18:03:31 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,52 +36,24 @@ char	*ft_get_path(char *cmd, t_pipe *pipex)
 	return (tab);
 }
 
-void	ft_allocate_cmd(t_pipe *pipex, int argc, char **argv)
+void	ft_allocate_cmd(t_pipe *pipex, int argc, char **argv, int i)
 {
-	int	i;
 	int	j;
 
 	j = 0;
-	if (pipex->here_doc == 0)
+	pipex->cmd = malloc(sizeof(char **) * (argc));
+	if (!pipex->cmd)
+		ft_end(pipex, 1);
+	while (i < argc)
 	{
-		pipex->cmd = malloc(sizeof(char **) * (argc - 1));
-		if (!pipex->cmd)
+		pipex->cmd[j] = ft_split(argv[i], ' ');
+		if (!pipex->cmd[j])
 			ft_end(pipex, 1);
-		i = 2;
-		while (i < argc - 1)
-		{
-			pipex->cmd[j] = ft_split(argv[i], ' ');
-			if (!pipex->cmd[j])
-				ft_end(pipex, 1);
-			pipex->cmd[j][0] = ft_get_path(pipex->cmd[j][0], pipex);
-			i++;
-			j++;
-		}
-		pipex->cmd[j] = NULL;
-		pipex->pid = malloc(sizeof(int) * (argc - 2));
-		if (!pipex->pid)
-			ft_end(pipex, 1);
+		pipex->cmd[j][0] = ft_get_path(pipex->cmd[j][0], pipex);
+		i++;
+		j++;
 	}
-	else
-	{
-		pipex->cmd = malloc(sizeof(char **) * (argc - 2));
-		if (!pipex->cmd)
-			ft_end(pipex, 1);
-		i = 3;
-		while (i < argc - 1)
-		{
-			pipex->cmd[j] = ft_split(argv[i], ' ');
-			if (!pipex->cmd)
-				ft_end(pipex, 1);
-			pipex->cmd[j][0] = ft_get_path(pipex->cmd[j][0], pipex);
-			i++;
-			j++;
-		}
-		pipex->cmd[j] = NULL;
-		pipex->pid = malloc(sizeof(int) * (argc - 3));
-		if (!pipex->pid)
-			ft_end(pipex, 1);
-	}
+	pipex->cmd[j] = NULL;
 }
 
 void	ft_get_env(t_pipe *pipex)
@@ -135,5 +107,18 @@ void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp)
 	pipex->pid = NULL;
 	check_here_doc(pipex, argc, argv);
 	ft_get_env(pipex);
-	ft_allocate_cmd(pipex, argc, argv);
+	if (pipex->here_doc == 0)
+	{
+		ft_allocate_cmd(pipex, argc - 1, argv, 2);
+		pipex->pid = malloc(sizeof(int) * (argc - 2));
+		if (!pipex->pid)
+			ft_end(pipex, 1);
+	}
+	else if (pipex->here_doc == 1)
+	{
+		ft_allocate_cmd(pipex, argc - 2, argv, 3);
+		pipex->pid = malloc(sizeof(int) * (argc - 3));
+		if (!pipex->pid)
+			ft_end(pipex, 1);
+	}
 }
