@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <lucas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:48:27 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/22 18:03:31 by lucas            ###   ########.fr       */
+/*   Updated: 2023/04/05 11:15:55 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	ft_parsing_args(char *cmd)
+{
+	if (!ft_strncmp("/", cmd, 2))
+		return (1);
+	if (!ft_strncmp(".", cmd, 1))
+		return (1);
+	if (!ft_strncmp(" ", cmd, 1))
+		return (1);
+	return (0);
+}
 
 char	*ft_get_path(char *cmd, t_pipe *pipex)
 {
@@ -19,19 +30,24 @@ char	*ft_get_path(char *cmd, t_pipe *pipex)
 	char	*tab;
 
 	j = 0;
-	tmp = ft_strjoin("/", cmd);
-	while (pipex->split_path[j])
+	tab = NULL;
+	if (ft_parsing_args(cmd) == 0)
 	{
-		tab = ft_strjoin(pipex->split_path[j], tmp);
-		if (access(tab, F_OK) != -1)
-			break ;
-		free(tab);
-		tab = NULL;
-		j++;
+		tmp = ft_strjoin("/", cmd);
+		while (pipex->split_path[j])
+		{
+			tab = ft_strjoin(pipex->split_path[j], tmp);
+			if (access(tab, F_OK) != -1)
+				break ;
+			free(tab);
+			tab = NULL;
+			j++;
+		}
+		free(tmp);
 	}
-	free(tmp);
 	if (!tab)
-		return (ft_printf("pipex : command not found: %s\n", cmd), cmd);
+		return (ft_printf("pipex : command not found: %s\n", cmd), free(cmd),
+			NULL);
 	free(cmd);
 	return (tab);
 }
@@ -116,7 +132,7 @@ void	init_struct(t_pipe *pipex, int argc, char **argv, char **envp)
 	}
 	else if (pipex->here_doc == 1)
 	{
-		ft_allocate_cmd(pipex, argc - 2, argv, 3);
+		ft_allocate_cmd(pipex, argc - 1, argv, 3);
 		pipex->pid = malloc(sizeof(int) * (argc - 3));
 		if (!pipex->pid)
 			ft_end(pipex, 1);

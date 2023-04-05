@@ -6,7 +6,7 @@
 /*   By: luhumber <luhumber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 22:50:30 by lucas             #+#    #+#             */
-/*   Updated: 2023/03/25 10:57:42 by luhumber         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:21:24 by luhumber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,29 @@ int	ft_pipex_algo(t_pipe *pipex)
 		return (ft_print_error("dup2"));
 	while (pipex->cmd[i] != NULL)
 	{
-		if (pipe(fd) == -1)
-			return (ft_print_error("pipe"));
-		pid = fork();
-		if (pid == -1)
-			ft_print_error("pipe");
-		else if (pid == 0)
-			if (!ft_execute(pipex, fd, i))
-				return (1);
-		pipex->tab_pid[i] = pid;
-		pipex->tab_fd[i] = pipex->input_fd;
-		pipex->input_fd = fd[0];
-		close(fd[1]);
+		if (pipex->cmd[i][0] != NULL)
+		{
+			if (pipe(fd) == -1)
+				return (ft_print_error("pipe"));
+			pid = fork();
+			if (pid == -1)
+				ft_print_error("pipe");
+			else if (pid == 0)
+				if (!ft_execute(pipex, fd, i))
+					return (1);
+			pipex->tab_pid[i] = pid;
+			pipex->tab_fd[i] = pipex->input_fd;
+			pipex->input_fd = fd[0];
+			close(fd[1]);
+		}
+		else if (pipex->cmd[i][0] == NULL && i > 0)
+		{
+			pipex->tab_pid[i] = -1;
+			pipex->tab_fd[i] = -1;
+			pipex->input_fd = fd[0];
+			close(fd[0]);
+			close(fd[1]);
+		}
 		i++;
 	}
 	dup2(STDOUT_FILENO, pipex->file_out);
@@ -72,7 +83,6 @@ int	ft_here_doc(t_pipe *pipex)
 			if (!ft_strncmp(line, pipex->limiter, ft_strlen(line) - 1))
 				break ;
 			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
 			free(line);
 		}
 		free(line);

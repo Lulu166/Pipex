@@ -1,0 +1,9 @@
+Makefile
+exit_pipex.c
+init_struct.c
+libft
+outfile
+pipex
+pipex.c
+pipex.h
+reading.c
